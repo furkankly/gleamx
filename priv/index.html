@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gleamx</title>
+    <link href="./output.css" rel="stylesheet" />
+    <script
+      src="https://unpkg.com/htmx.org@2.0.2"
+      integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      htmx.defineExtension("submitjson", {
+        onEvent: function (name, evt) {
+          if (name === "htmx:configRequest") {
+            evt.detail.headers["Content-Type"] = "application/json";
+          }
+        },
+        encodeParameters: function (xhr, parameters, elt) {
+          xhr.overrideMimeType("text/json"); // override default mime type
+          const body = parameters;
+          return JSON.stringify(body);
+        },
+      });
+    </script>
+  </head>
+  <body
+    class="mx-auto max-w-screen-xl items-center sm:flex sm:flex-row-reverse"
+  >
+    <form
+      class="m-4 mx-auto flex w-96 flex-col gap-4 rounded border border-black p-12 sm:mx-4"
+      id="example-form"
+      hx-post="/comments"
+      hx-ext="submitjson"
+      hx-swap="none"
+      hx-on::after-request="event.detail.successful ? this.reset() : null"
+    >
+      <div>
+        <label class="text-xl" for="title">Title</label>
+        <input
+          id="title"
+          class="w-full border border-black p-2"
+          type="text"
+          name="title"
+          placeholder="Comment Title"
+          required
+        />
+      </div>
+      <div>
+        <label class="text-xl" for="by">Commenter</label>
+        <input
+          id="by"
+          class="w-full border border-black p-2"
+          type="text"
+          name="by"
+          placeholder="Commenter"
+          required
+        />
+      </div>
+      <div>
+        <label class="text-xl" for="content">Comment</label>
+        <textarea
+          id="content"
+          class="h-56 w-full resize-none border-2 border-black p-2"
+          name="content"
+          placeholder="Type your comment.."
+          required
+        ></textarea>
+      </div>
+      <button
+        class="rounded bg-black p-4 font-bold text-white hover:bg-gray-600"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+    <div
+      class="mx-2 flex flex-1 flex-col py-2 sm:h-screen sm:overflow-x-auto"
+      hx-get="/comments"
+      hx-target="#comments"
+      hx-trigger="load, every 5s, newComment from:body"
+    >
+      <h2 class="mb-2 text-4xl font-bold">Comments</h2>
+      <div id="comments" class="px-2">Loading...</div>
+    </div>
+  </body>
+</html>

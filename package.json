@@ -1,0 +1,22 @@
+{
+  "name": "gleamx",
+  "version": "1.0.0",
+  "description": "[![Package Version](https://img.shields.io/hexpm/v/gleamx)](https://hex.pm/packages/gleamx) [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/gleamx/)",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "sqlite3": "^5.1.7",
+    "tailwindcss": "^3.4.10"
+  }
+}
